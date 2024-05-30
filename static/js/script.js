@@ -86,3 +86,13 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 });
+
+const section_tableau = document.getElementById("section_tableau");
+const section_utilisateur = document.getElementById("section_utilisateur")
+const lien_utilisateur = document.getElementById("lien_utilisateur")
+lien_utilisateur.addEventListener('click', function(event) {
+    event.preventDefault();
+    section_tableau.classList.remove("flex");
+    section_tableau.classList.add('hidden');
+    section_utilisateur.classList.remove("hidden")
+});

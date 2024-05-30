@@ -17,10 +17,29 @@ def prompt():
     return Response(assistant(conversation), mimetype="text/event-stream")
 
 
-@app.route("/gestion")
-def gestion():
-    return render_template("bases_des_pages_de_gestion.html")
+@app.route("/alimentaire")
+def alimentaire():
+    return render_template("page_tableau_alimentaire.html")
 
+
+@app.route("/boisson")
+def boisson():
+    return render_template("page_tableau_boisson.html")
+
+
+@app.route("/cosmetique")
+def cosmetique():
+    return render_template("page_tableau_cosmetique.html")
+
+
+@app.route("/eletromenage")
+def electromenage():
+    return render_template("page_tableau_eletromenage.html")
+
+
+@app.route("/utilisateur")
+def utilisateur():
+    return render_template("page_utilisateur.html")
 
 def construction_conversation(message: list) -> list[dict]:
     return [

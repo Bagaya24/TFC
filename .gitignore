@@ -1,5 +1,5 @@
-.env library root/
-node_modules/
+.env
+node_modules
 package.json
 package-lock.json
 tailwind.config.js
