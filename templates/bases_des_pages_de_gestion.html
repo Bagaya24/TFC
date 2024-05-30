@@ -1,10 +1,49 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=windows-1251">
+    <title>Title</title>
+    <link rel="stylesheet" href="{{url_for('static', filename='./css/style.css')}}">
 </head>
 <body>
-$END$
+    <main class="">
+        <div class="flex flex-row">
+            <section class="basis-1/12 h-screen w-full bg-blue-900 grid grid-rows-8 text-gray-50">
+                <div class="w-full row-span-7">
+                    <ul>
+                        <li><a href="">BD</a></li>
+                        <li><a href="">User</a></li>
+                    </ul>
+                </div>
+                <div class=" w-full row-span-1">
+                    <a href=""><span>Dec</span></a>
+                </div>
+            </section>
+            <section class="basis-1/6 h-screen w-full bg-blue-50">
+                <ul class="text-blue-400">
+                    <li><a href="">Alimentateur</a></li>
+                    <li><a href="">Cosmetique</a></li>
+                    <li><a href="">Eletromenager</a></li>
+                    <li><a href="">Boisson</a></li>
+                </ul>
+            </section>
+            <section class="basis-9/12 w-full h-screen grid grid-rows-10">
+                <div class="row-span-1 grid grid-cols-8">
+                    <div class="col-span-6  w-full h-full">
+                        <h1>tableau de produit alimentaire</h1>
+                    </div>
+                    <div class="col-span-2  w-full h-full">
+                        <a href="">Ajouter</a>
+                    </div>
+                </div>
+                <div class="bg-blue-700 row-span-9">
+                    
+                </div>
+            </section>
+        </div>
+
+    </main>
 </body>
 </html>
