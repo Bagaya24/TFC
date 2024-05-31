@@ -87,12 +87,32 @@ document.addEventListener("DOMContentLoaded", () => {
     });
 });
 
-const section_tableau = document.getElementById("section_tableau");
-const section_utilisateur = document.getElementById("section_utilisateur")
-const lien_utilisateur = document.getElementById("lien_utilisateur")
-lien_utilisateur.addEventListener('click', function(event) {
-    event.preventDefault();
-    section_tableau.classList.remove("flex");
-    section_tableau.classList.add('hidden');
-    section_utilisateur.classList.remove("hidden")
-});
+function showAjouterModal(){
+    let ajouter_modal = document.getElementById("ajouter_modal");
+    ajouter_modal.classList.remove("hidden");
+    ajouter_modal.classList.add("flex");
+    
+};
+
+function closeModalAjouter(){
+    let ajouter_modal = document.getElementById("ajouter_modal");
+    ajouter_modal.classList.remove("flex");
+    ajouter_modal.classList.add("hidden");
+}
+
+function showMenuModal(button){
+    let menu_modal = document.getElementById("menu_modal");
+    let buttonRect = button.getBoundingClientRect();
+
+    menu_modal.style.top = buttonRect.top + buttonRect.height - 10 + 'px';
+    menu_modal.style.left = buttonRect.left - 80 + 'px';
+    menu_modal.classList.remove("hidden");
+    menu_modal.classList.add("block");
+}
+
+function closeMenuModal(button){
+    let menu_modal = document.getElementById("menu_modal");
+
+    menu_modal.classList.remove("flex");
+    menu_modal.classList.add("hidden");
+}

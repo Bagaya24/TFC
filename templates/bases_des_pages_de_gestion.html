@@ -39,62 +39,67 @@
                 </div>
             </section>
             <!--Menu secondaire-->
-            <section class="w-36 h-screen bg-blue-50">
+            <section class="w-40 h-screen bg-blue-50 {% block menu_secondaire %}{% endblock %}">
                 <ul class="text-right text-sm font-semibold text-gray-500">
-                    <li class="p-3 border-r-2 border-r-blue-100 {% block t_ali %}{% endblock %} hover:text-gray-700">
-                        <a href="{{url_for('alimentaire')}}">
+                    <li class="p-3 border-r-2  {% block t_ali %} border-r-blue-100 {% endblock %} hover:text-gray-700">
+                        <a href="{{url_for('alimentaire')}}" class="px-1 flex justify-end">
+                            <span>Alimentaire</span>
                             <svg class="w-5 h-5 text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 6c0 1.657-3.134 3-7 3S5 7.657 5 6m14 0c0-1.657-3.134-3-7-3S5 4.343 5 6m14 0v6M5 6v6m0 0c0 1.657 3.134 3 7 3s7-1.343 7-3M5 12v6c0 1.657 3.134 3 7 3s7-1.343 7-3v-6"/>
                             </svg>
-                          Alimentaire
+                            
 
                         </a>
                     </li>
-                    <li class="p-3 border-r-2 border-r-blue-100 {% block t_boi %}{% endblock %} hover:text-gray-700">
-                        <a href="{{url_for('boisson')}}">
+                    <li class="p-3 border-r-2  {% block t_boi %} border-r-blue-100 {% endblock %} hover:text-gray-700">
+                        <a href="{{url_for('boisson')}}" class="px-1 flex justify-end">
+                            <span>Boisson</span> 
                             <svg class="w-5 h-5 text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 6c0 1.657-3.134 3-7 3S5 7.657 5 6m14 0c0-1.657-3.134-3-7-3S5 4.343 5 6m14 0v6M5 6v6m0 0c0 1.657 3.134 3 7 3s7-1.343 7-3M5 12v6c0 1.657 3.134 3 7 3s7-1.343 7-3v-6"/>
                             </svg>
-                          Boisson
+                            
 
                         </a>
                     </li>
-                    <li class="p-3 border-r-2 border-r-blue-100 {% block t_cos %}{% endblock %} hover:text-gray-700">
-                        <a href="{{url_for('cosmetique')}}">
+                    <li class="p-3 border-r-2  {% block t_cos %} border-r-blue-100 {% endblock %} hover:text-gray-700">
+                        <a href="{{url_for('cosmetique')}}" class="px-1 flex justify-end">
+                            <span>Cosmetique</span>
                             <svg class="w-5 h-5 text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 6c0 1.657-3.134 3-7 3S5 7.657 5 6m14 0c0-1.657-3.134-3-7-3S5 4.343 5 6m14 0v6M5 6v6m0 0c0 1.657 3.134 3 7 3s7-1.343 7-3M5 12v6c0 1.657 3.134 3 7 3s7-1.343 7-3v-6"/>
                             </svg>
-                          Cosmetique
+                             
 
                         </a>
                     </li>
-                    <li class="p-3 border-r-2 border-r-blue-100 {% block t_ele %}{% endblock %} hover:text-gray-700">
-                        <a href="{{url_for('electromenage')}}">
+                    <li class="p-3 border-r-2  {% block t_ele %} border-r-blue-100 {% endblock %} hover:text-gray-700">
+                        <a href="{{url_for('electromenage')}}" class="px-1 flex justify-end">
+                            <span>Electromenager</span> 
                             <svg class="w-5 h-5 text-blue-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 6c0 1.657-3.134 3-7 3S5 7.657 5 6m14 0c0-1.657-3.134-3-7-3S5 4.343 5 6m14 0v6M5 6v6m0 0c0 1.657 3.134 3 7 3s7-1.343 7-3M5 12v6c0 1.657 3.134 3 7 3s7-1.343 7-3v-6"/>
-                            </svg>Electromenage
+                            </svg>
+                            
 
                         </a>
                     </li>
                 </ul>
             </section>
             <!--Tableau-->
-            <section class="w-10/12 h-screen {% block hidden_s_tab %}flex{% endblock %} flex-col" id="section_tableau">
+            <section class="w-11/12 h-screen {% block hidden_s_tab %}flex{% endblock %} flex-col" id="section_tableau">
                 <div class="basis-2/12 flex flex-row">
                     <div class="basis-9/12 flex justify-center items-center">
                         {% block titre %}
                         {% endblock %}
                     </div>
                     <div class="basis-3/12 flex justify-center items-center">
-                        <button class="p-3 bg-blue-900 hover:bg-blue-950 border rounded-lg">
+                        <button class="p-3 bg-blue-900 hover:bg-blue-950 border rounded-lg" onclick="showAjouterModal()">
                             <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
                             </svg>
                         </button>
                     </div>
                 </div>
-                <div class="basis-10/12 overflow-x-auto">
-                    <table class="min-w-full text-center text-sm font-light text-surface mx-2">
+                <div class="basis-10/12 overflow-x-auto w-[95%] flex justify-center m-3 shadow-xl rounded-md ">
+                    <table class="min-w-full text-center text-sm font-light text-surface">
                         <thead class="border-b border-neutral-200">
                             {% block head_tableau %}{% endblock head_tableau %}
                         </thead>
@@ -103,18 +108,37 @@
                         </tbody>
                     </table>
                 </div>
+
+                <!--Modal ajouter-->
+                <div class="w-[75%] h-[75%] top-[5%] bg-gray-500 bg-opacity-50 fixed hidden justify-center items-center transition-opacity duration-100" id="ajouter_modal">
+                    <div class="bg-white w-[80%] p-10 shadow-lg flex flex-col">
+                        <div>
+                            {% block contenu_modal %}{% endblock %}
+                        </div>
+                        <div>
+                            <button>Ajouter</button>
+                            <button class="" onclick="closeModalAjouter()">Annuler</button>
+                        </div>
+                    </div>
+                </div>
+                <!--Modal menu-->
+                {% block menu_modal %}
+                <div class="w-20 p-1 fixed bg-white hidden flex-col shadow-md rounded-md justify-start items-center" id="menu_modal">
+                    <button class="m-2 text-sm text-gray-600 hover:text-gray-800" onclick="closeMenuModal(this)">Modifier</button>
+                    <button class="m-2 text-sm text-gray-600 hover:text-gray-800" onclick="closeMenuModal(this)">Effacer</button>
+                    
+                </div>
+                {% endblock %}
             </section>
             <!--Donnees utilisateur-->
-            <section class="w-10/12 h-screen {% block hidden_s_uti %}hidden{% endblock %} flex flex-row">
+            <section class="w-11/12 h-screen {% block hidden_s_uti %}hidden{% endblock %} flex flex-row">
                 {% block utilisateur %}
                 {% endblock %}
             </section>
-            <!--Menu optionel-->
-            <section class="w-36 h-screen bg-gray-50">
-        
             
-            </section>
+
         </div>
     </main>
 </body>
+<script src="{{url_for('static', filename='/js/script.js')}}"></script>
 </html>

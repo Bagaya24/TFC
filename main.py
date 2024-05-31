@@ -41,6 +41,7 @@ def electromenage():
 def utilisateur():
     return render_template("page_utilisateur.html")
 
+
 def construction_conversation(message: list) -> list[dict]:
     return [
         {"role": "user" if i % 2 == 0 else "assistant", "content": message}
@@ -52,7 +53,6 @@ def assistant(conversation: list[dict]) -> str:
     reponse_assistant = ollama.chat(model="assistant_1",
                                     messages=conversation,
                                     )
-    print(reponse_assistant["message"]["content"])
     yield reponse_assistant["message"]["content"]
 
 
