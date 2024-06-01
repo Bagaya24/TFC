@@ -109,7 +109,11 @@ while True:
     user = input("User: ")
     if user.lower() != "stop":
         b = {'role': 'user', 'content': f'Verifie dans {inventaire} puis repond a la question "{user}"'}
-        response = ollama.chat(model='assistant_1', messages=[b])
-        print(f"Assistant: {response['message']['content']}")
+        response = ollama.chat(model='assistant_2',
+                               messages=[b],
+                               stream=True)
+        print("Assistant:")
+        for chunk in response:
+            print(chunk['message']['content'], end="", flush=True)
     else:
         break

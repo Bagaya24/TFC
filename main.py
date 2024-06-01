@@ -1,7 +1,50 @@
 from flask import Flask, request, render_template, redirect, Response
 import ollama
+from flask_wtf import FlaskForm
+from wtforms import SubmitField, StringField, EmailField, IntegerField, PasswordField
+from wtforms.validators import Email, DataRequired
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import Integer, String, ForeignKey, Float, DATE
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
+
+class Base(DeclarativeBase):
+    pass
+
 
 app = Flask(__name__)
+
+
+app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:fazili@localhost/db_stock_supermarche"
+app.config["SECRET KEY"] = "cnwdnenoe.'20323oii"
+
+db = SQLAlchemy(model_class=Base)
+db.init_app(app)
+
+
+class Categorie(db.Model):
+    __tablename__ = "categorie"
+    id_categorie: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, unique=True)
+    nom_categorie: Mapped[str] = mapped_column(String, unique=True)
+
+
+class Produit(db.Model):
+    __tablename__ = "produits"
+    id_produit: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True, unique=True)
+    nom_produit: Mapped[str] = mapped_column(String, nullable=False, unique=True)
+    prix_produit: Mapped[float] = mapped_column(Float, nullable=False)
+    quantite_produit: Mapped[int] = mapped_column(Integer, nullable=False)
+    id_categorie_produit: Mapped[int] = mapped_column(Integer, ForeignKey(Categorie.id_categorie,
+                                                                          onupdate="CASCADE",
+                                                                          ondelete="CASCADE"))
+    date_ajout_produit = mapped_column(DATE, nullable=False)
+
+
+class Alimentaire(db.Model):
+    __tablename__ = "produit_alimentaire"
+    id_produit: Mapped[int] = mapped_column(Integer, primary_key=True)
+    id_sous_categorie: Mapped[int] = mapped_column(Integer, nullable=False)
+
 
 
 @app.route('/', methods=['GET', 'POST'])
