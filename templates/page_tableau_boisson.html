@@ -1,58 +1,114 @@
-{% extends "bases_des_pages_de_gestion.html" %}
-
-{% block bd %}text-blue-50{% endblock %}
-
-{% block t_boi %}text-gray-700 border-r-blue-400{% endblock t_boi %}
-
+{% extends "bases_des_pages_de_gestion.html" %} {% block bd %}text-blue-50{%
+endblock %} {% block t_boi %}text-gray-700 border-r-blue-400{% endblock t_boi %}
 {% block titre %}
 <h1 class="text-7xl text-center uppercase text-gray-700">boisson</h1>
-{% endblock titre %}
-
-{% block head_tableau %}
-<tr class="odd:bg-white text-gray-700">
+{% endblock titre %} {% block head_tableau %}
+<tr class="odd:bg-white text-gray-700 font-semibold">
     <th scope="col" class="py-3 px-3">Id</th>
     <th scope="col" class="py-3 px-3">Nom du produit</th>
-    <th scope="col" class="py-3 px-3">Categorie</th>
-    <th scope="col" class="py-3 px-3">Quantite(ml)</th>
-    <th scope="col" class="py-3 px-3">Nombre</th>
+    <th scope="col" class="py-3 px-3">Prix</th>
+    <th scope="col" class="py-3 px-3">Quantite</th>
     <th scope="col" class="py-3 px-3">Date de fabrication</th>
     <th scope="col" class="py-3 px-3">Date d'expiration</th>
+    <th scope="col" class="py-3 px-3">Description</th>
+    <th scope="col" class="py-3 px-3">Nutriment</th>
     <th scope="col" class="py-3 px-3">Action</th>
-
 </tr>
-{% endblock head_tableau %}
-
-{% block body_tableau %}
-{% for i in range(0, 20):%}
+{% endblock head_tableau %} {% block body_tableau %} {% for i in range(0, 20):%}
 {% if i % 2 == 0%}
 <tr class="border-b border-neutral-200 odd:bg-blue-50">
-{% else %}
+    {% else %}
+</tr>
+
 <tr class="border-b border-neutral-200 odd:bg-blue-50">
-{% endif %}
+    {% endif %}
     <td class="whitespace-nowrap py-3 px-3 font-semibold">{{ i }}</td>
-    <td class="whitespace-nowrap py-3 px-3">Ceres</td>
-    <td class="whitespace-nowrap py-3 px-3">Jus</td>
-    <td class="whitespace-nowrap py-3 px-3">300</td>
+    <td class="whitespace-nowrap py-3 px-3">Jus  de Pomme</td>
+    <td class="whitespace-nowrap py-3 px-3">4</td>
     <td class="whitespace-nowrap py-3 px-3">50</td>
     <td class="whitespace-nowrap py-3 px-3">2024</td>
     <td class="whitespace-nowrap py-3 px-3">2025</td>
+    <td class="whitespace-nowrap py-3 px-3">Jus ceres de 200 ml</td>
+    <td class="whitespace-nowrap py-3 px-3">Vitamine D</td>
     <td class="whitespace-nowrap py-3 px-3">
         <button onclick="showMenuModal(this)">
-            <svg class="w-6 h-6 text-gray-700" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                <path stroke="currentColor" stroke-linecap="round" stroke-width="2" d="M12 6h.01M12 12h.01M12 18h.01"/>
+            <svg
+                class="w-6 h-6 text-gray-700"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24">
+                <path
+                    stroke="currentColor"
+                    stroke-linecap="round"
+                    stroke-width="2"
+                    d="M12 6h.01M12 12h.01M12 18h.01" />
             </svg>
         </button>
-          
     </td>
 </tr>
-{% endfor %}
-{% endblock body_tableau %}
-
-
-{% block menu_modal %}
-{{ super() }}
-{% endblock %}
-
-{% block contenu_modal %}
-boisson
+{% endfor %} {% endblock body_tableau %} {% block menu_modal %} {{ super() }} {%
+endblock %} {% block contenu_modal %}
+<form action>
+    {{ form.csrf_token }}
+    <div class="flex flex-col gap-3">
+        <div>
+            {{ form.nom.label(class="text-gray-500 block") }} {{
+            form.nom(class="border border-blue-300 text-gray-900 text-sm
+            rounded-lg
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5")}}
+        </div>
+        <div class="flex flex-row gap-2">
+            <div>
+                {{ form.prix.label(class="text-gray-500 block")}} {{
+                form.prix(class="border border-blue-300 text-gray-900 text-sm
+                rounded-lg
+                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5")}}
+            </div>
+            <div>
+                {{ form.quantite.label(class="text-gray-500 block")}} {{
+                form.quantite(class="border border-blue-300 text-gray-900
+                text-sm
+                rounded-lg focus:ring-blue-500 focus:border-blue-500 block
+                w-full
+                p-2.5")}}
+            </div>
+        </div>
+        <div class="flex flex-row gap-2">
+            <div>
+                {{ form.date_fabrication.label(class="text-gray-500 block")}} {{
+                form.date_fabrication(class="")}}
+            </div>
+            <div>
+                {{ form.date_expiration.label(class="text-gray-500 block")}} {{
+                form.date_expiration(class="")}}
+            </div>
+        </div>
+        <div>
+            {{ form.description.label(class="text-gray-500 block")}} {{
+            form.description(class="border border-blue-300 text-gray-900 text-sm
+            rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
+            p-2.5")}}
+        </div>
+        <div>
+            {{ form.nutriment.label(class="text-gray-500 block")}} {{
+            form.nutriment(class="border border-blue-300 text-gray-900 text-sm
+            rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
+            p-2.5")}}
+        </div>
+        <div class="flex flex-row justify-center p-2">
+            {{ form.btn_ajouter(class="bg-blue-900 text-white text-sm
+            font-semibold
+            rounded-2xl p-3 mx-4 uppercase hover:bg-blue-700 hover:shadow-lg")}}
+            {{
+            form.btn_annuler(class="bg-white text-gray-700 border
+            border-blue-300
+            text-sm font-semibold rounded-2xl p-3 mx-4 uppercase
+            hover:bg-blue-100
+            hover:shadow-lg", onclick="closeModalAjouter()")}}
+        </div>
+    </div>
+</form>
 {% endblock %}

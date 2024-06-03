@@ -115,5 +115,6 @@ while True:
         print("Assistant:")
         for chunk in response:
             print(chunk['message']['content'], end="", flush=True)
+        print("\n")
     else:
         break

@@ -98,7 +98,7 @@
                         </button>
                     </div>
                 </div>
-                <div class="basis-10/12 overflow-x-auto w-[95%] flex justify-center m-3 shadow-xl rounded-md ">
+                <div class="basis-10/12 overflow-x-auto w-[95%] flex justify-center m-3 shadow-xl rounded-md scrollbar-thin scrollbar-thumb-blue-200 scrollbar-track-gray-50">
                     <table class="min-w-full text-center text-sm font-light text-surface">
                         <thead class="border-b border-neutral-200">
                             {% block head_tableau %}{% endblock head_tableau %}
@@ -111,14 +111,11 @@
 
                 <!--Modal ajouter-->
                 <div class="w-[75%] h-[75%] top-[5%] bg-gray-500 bg-opacity-50 fixed hidden justify-center items-center transition-opacity duration-100" id="ajouter_modal">
-                    <div class="bg-white w-[80%] p-10 shadow-lg flex flex-col">
-                        <div>
+                    <div class="bg-white w-[80%] p-15 shadow-lg flex flex-col gap-2">
+                        <div class="flex justify-center p-3">
                             {% block contenu_modal %}{% endblock %}
                         </div>
-                        <div>
-                            <button>Ajouter</button>
-                            <button class="" onclick="closeModalAjouter()">Annuler</button>
-                        </div>
+                        
                     </div>
                 </div>
                 <!--Modal menu-->
