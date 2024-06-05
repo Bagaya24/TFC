@@ -53,7 +53,7 @@ block titre %}
 </tr>
 {% endfor %} {% endblock body_tableau %} {% block menu_modal %} {{ super() }} {%
 endblock %} {% block contenu_modal %}
-<form action>
+<form action="{{url_for('alimentaire') }}" method="post">
     {{ form.csrf_token }}
     <div class="flex flex-col ga-3">
         <div>

@@ -6,6 +6,7 @@
     <meta http-equiv="Content-Type" content="text/html;charset=windows-1251">
     <title>Title</title>
     <link rel="stylesheet" href="{{url_for('static', filename='./css/style.css')}}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     <main>
@@ -109,6 +110,7 @@
                     </table>
                 </div>
 
+
                 <!--Modal ajouter-->
                 <div class="w-[75%] h-[75%] top-[5%] bg-gray-500 bg-opacity-50 fixed hidden justify-center items-center transition-opacity duration-100" id="ajouter_modal">
                     <div class="bg-white w-[80%] p-15 shadow-lg flex flex-col gap-2">
@@ -138,4 +140,5 @@
     </main>
 </body>
 <script src="{{url_for('static', filename='/js/script.js')}}"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </html>

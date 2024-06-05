@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, redirect, Response, url_for
+from flask import Flask, request, render_template, redirect, Response, url_for, jsonify
 import ollama
 from form import FormAliment, FormBoisson, FormComestique, FormEletromenager
 from datetime import datetime
@@ -42,6 +42,9 @@ class Produits(db.Model):
     nutriments = mapped_column(Text, nullable=True)
     details_specifiques = mapped_column(db.Text, nullable=True)
 
+    def to_dict(self):
+        return {column.name: getattr(self, column.name) for column in self.__table__.columns}
+
 
 # with app.app_context():
 #     db.create_all()
@@ -59,10 +62,49 @@ def prompt():
     return Response(assistant(conversation), mimetype="text/event-stream")
 
 
+@app.route("/api")
+def api_produit():
+    produits = db.session.execute(db.select(Produits)).scalars().all()
+    result = []
+    for produit in produits:
+        result.append({
+            'id': produit.id,
+            'nom': produit.nom,
+            'categorie': produit.categorie_id.nom,
+            'prix': str(produit.prix),
+            'description': produit.description,
+            'quantite': produit.quantite,
+            'date_creation': produit.date_creation.strftime('%Y-%m-%d'),
+            'date_fabrication': produit.date_fabrication.strftime('%Y-%m-%d') if produit.date_fabrication else None,
+            'date_expiration': produit.date_expiration.strftime('%Y-%m-%d') if produit.date_expiration else None,
+            'nutriments': produit.nutriments,
+            'details_specifiques': produit.details_specifiques
+        })
+    return jsonify(result)
+
 @app.route("/alimentaire", methods=["POST", "GET"])
 def alimentaire():
     form = FormAliment()
     if request.method == "POST":
+        nom = form.nom.data
+        quantite = form.quantite.data
+        prix = form.prix.data
+        date_fabrication = form.date_fabrication.data
+        date_expiration = form.date_expiration.data
+        description = form.description.data
+        nutriment = form.nutriment.data
+        nouveau_produit_alimentaire = Produits(
+            nom=nom,
+            categorie_id=1,
+            quantite=quantite,
+            prix=prix,
+            description=description,
+            date_expiration=date_expiration,
+            date_fabrication=date_fabrication,
+            nutriments=nutriment,
+        )
+        db.session.add(nouveau_produit_alimentaire)
+        db.session.commit()
         return redirect(url_for("alimentaire"))
     return render_template("page_tableau_alimentaire.html", form=form)
 
@@ -71,6 +113,25 @@ def alimentaire():
 def boisson():
     form = FormBoisson()
     if request.method == "POST":
+        nom = form.nom.data
+        quantite = form.quantite.data
+        prix = form.prix.data
+        date_fabrication = form.date_fabrication
+        date_expiration = form.date_expiration.data
+        description = form.description.data
+        nutriment = form.nutriment.data
+        nouveau_produit_boisson = Produits(
+            nom=nom,
+            categorie_id=2,
+            quantite=quantite,
+            prix=prix,
+            description=description,
+            date_expiration=date_expiration,
+            date_fabrication=date_fabrication,
+            nutriments=nutriment,
+        )
+        db.session.add(nouveau_produit_boisson)
+        db.session.commit()
         return redirect(url_for("boisson"))
     return render_template("page_tableau_boisson.html", form=form)
 
@@ -79,6 +140,25 @@ def boisson():
 def cosmetique():
     form = FormComestique()
     if request.method == "POST":
+        nom = form.nom.data
+        quantite = form.quantite.data
+        date_fabrication = form.date_fabrication
+        date_expiration = form.date_expiration.data
+        prix = form.prix.data
+        type_produit = form.type.data
+        description = form.description.data
+        nouveau_produit_cosmetique = Produits(
+            nom=nom,
+            categorie_id=3,
+            quantite=quantite,
+            prix=prix,
+            description=type_produit,
+            date_expiration=date_expiration,
+            date_fabrication=date_fabrication,
+            details_specifiques=description,
+        )
+        db.session.add(nouveau_produit_cosmetique)
+        db.session.commit()
         return redirect(url_for("cosmetique"))
     return render_template("page_tableau_cosmetique.html", form=form)
 
@@ -87,6 +167,23 @@ def cosmetique():
 def electromenage():
     form = FormEletromenager()
     if request.method == "POST":
+        if request.method == "POST":
+            nom = form.nom.data
+            quantite = form.quantite.data
+            prix = form.prix.data
+            type_produit = form.type.data
+            description = form.description.data
+            nouveau_produit_electromenager = Produits(
+                nom=nom,
+                categorie_id=4,
+                quantite=quantite,
+                prix=prix,
+                description=type_produit,
+                details_specifiques=description,
+            )
+            db.session.add(nouveau_produit_electromenager)
+            db.session.commit()
+
         return redirect(url_for("electromenage"))
     return render_template("page_tableau_eletromenage.html", form=form)
 
@@ -104,7 +201,7 @@ def construction_conversation(message: list) -> list[dict]:
 
 
 def assistant(conversation: list[dict]) -> str:
-    reponse_assistant = ollama.chat(model="assistant_1",
+    reponse_assistant = ollama.chat(model="assistant_2",
                                     messages=conversation,
                                     stream=True
                                     )

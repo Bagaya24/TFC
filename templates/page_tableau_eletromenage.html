@@ -49,7 +49,7 @@ endblock %} {% block t_ele %}text-gray-700 border-r-blue-400{% endblock t_ele %}
 </tr>
 {% endfor %} {% endblock body_tableau %} {% block menu_modal %} {{ super() }} {%
 endblock %} {% block contenu_modal %}
-<form action>
+<form action="{{url_for('electromenage') }}" method="post">
     {{ form.csrf_token }}
     <div class="flex flex-col gap-3">
         <div>
