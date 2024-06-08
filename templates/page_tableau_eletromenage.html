@@ -14,20 +14,14 @@ endblock %} {% block t_ele %}text-gray-700 border-r-blue-400{% endblock t_ele %}
     <th scope="col" class="py-3 px-3">Description</th>
     <th scope="col" class="py-3 px-3">Action</th>
 </tr>
-{% endblock head_tableau %} {% block body_tableau %} {% for i in range(0, 20):%}
-{% if i % 2 == 0%}
-<tr class="border-b border-neutral-200 odd:bg-blue-50">
-    {% else %}
-</tr>
-
-<tr class="border-b border-neutral-200 odd:bg-blue-50">
-    {% endif %}
-    <td class="whitespace-nowrap py-3 px-3 font-semibold">{{i}}</td>
-    <td class="whitespace-nowrap py-3 px-3">LG</td>
-    <td class="whitespace-nowrap py-3 px-3">500</td>
-    <td class="whitespace-nowrap py-3 px-3">10</td>
-    <td class="whitespace-nowrap py-3 px-3">Television</td>
-    <td class="whitespace-nowrap py-3 px-3">UHD</td>
+{% endblock head_tableau %} {% block body_tableau %} {% for produit in produits:%}
+    <tr class="border-b border-neutral-200 odd:bg-blue-50">
+    <td class="whitespace-nowrap py-3 px-3 font-semibold">{{produit}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.nom}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.prix}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.quantite}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.description}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.details_specifiques}}</td>
     <td class="whitespace-nowrap py-3 px-3">
         <button onclick="showMenuModal(this)">
             <svg
@@ -47,9 +41,21 @@ endblock %} {% block t_ele %}text-gray-700 border-r-blue-400{% endblock t_ele %}
         </button>
     </td>
 </tr>
-{% endfor %} {% endblock body_tableau %} {% block menu_modal %} {{ super() }} {%
-endblock %} {% block contenu_modal %}
-<form action="{{url_for('electromenage') }}" method="post">
+{% endfor %} {% endblock body_tableau %}
+
+{% block menu_modal %}
+{{super()}}
+{%endblock %}
+
+{% block fonction_effacer %}
+    {{ url_for('effacer_electromenager') }}
+{% endblock %}
+
+{% block effacer_modal %}
+{{super()}}
+{% endblock %}
+{% block contenu_modal %}
+
     {{ form.csrf_token }}
     <div class="flex flex-col gap-3">
         <div>

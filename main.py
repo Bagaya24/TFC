@@ -30,24 +30,26 @@ class Categories(db.Model):
 class Produits(db.Model):
     id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
     nom: Mapped[str] = mapped_column(String(255), nullable=False)
-    categorie_id: Mapped[int] = mapped_column(db.Integer,
+    categorie_id: Mapped[int] = mapped_column(Integer,
                                               ForeignKey(Categories.id, ondelete="CASCADE", onupdate="CASCADE"),
                                               nullable=False)
     prix: Mapped[float] = mapped_column(db.Numeric(10, 2), nullable=False)
     description: Mapped[str] = mapped_column(Text, nullable=False)
-    quantite: Mapped[int] = mapped_column(db.Integer, nullable=False)
-    date_creation = mapped_column(DATE, default=datetime.now().date(), nullable=False)
+    quantite: Mapped[int] = mapped_column(Integer, nullable=False)
+    date_d_ajout = mapped_column(DATE, default=datetime.now().date(), nullable=False)
     date_fabrication = mapped_column(DATE, nullable=True)
     date_expiration = mapped_column(DATE, nullable=True)
     nutriments = mapped_column(Text, nullable=True)
     details_specifiques = mapped_column(db.Text, nullable=True)
+    devise: Mapped[str] = mapped_column(String(10), default="USD")
 
     def to_dict(self):
         return {column.name: getattr(self, column.name) for column in self.__table__.columns}
 
 
-# with app.app_context():
-#     db.create_all()
+with app.app_context():
+    db.create_all()
+
 
 @app.route('/', methods=['GET', 'POST'])
 def home():
@@ -82,9 +84,11 @@ def api_produit():
         })
     return jsonify(result)
 
+
 @app.route("/alimentaire", methods=["POST", "GET"])
 def alimentaire():
     form = FormAliment()
+    produit_alimentaire = db.session.execute(db.select(Produits).where(Produits.categorie_id == 1)).scalars().all()
     if request.method == "POST":
         nom = form.nom.data
         quantite = form.quantite.data
@@ -106,17 +110,30 @@ def alimentaire():
         db.session.add(nouveau_produit_alimentaire)
         db.session.commit()
         return redirect(url_for("alimentaire"))
-    return render_template("page_tableau_alimentaire.html", form=form)
+    return render_template("page_tableau_alimentaire.html", form=form, produits=produit_alimentaire)
+
+
+@app.route("/alimentaire/effacer", methods=["POST"])
+def effacer_aliment():
+    if request.method == "POST":
+        id_produit_a_effacer = request.form.get("id")
+        produit_a_effacer = db.get_or_404(Produits, id_produit_a_effacer)
+        db.session.delete(produit_a_effacer)
+        db.session.commit()
+        return redirect(url_for("alimentaire"))
 
 
 @app.route("/boisson", methods=["POST", "GET"])
 def boisson():
     form = FormBoisson()
+    produit_boisson = db.session.execute(db.select(Produits).where(Produits.categorie_id == 2)).scalars().all()
+    for produit in produit_boisson:
+        print(produit)
     if request.method == "POST":
         nom = form.nom.data
         quantite = form.quantite.data
         prix = form.prix.data
-        date_fabrication = form.date_fabrication
+        date_fabrication = form.date_fabrication.data
         date_expiration = form.date_expiration.data
         description = form.description.data
         nutriment = form.nutriment.data
@@ -133,16 +150,27 @@ def boisson():
         db.session.add(nouveau_produit_boisson)
         db.session.commit()
         return redirect(url_for("boisson"))
-    return render_template("page_tableau_boisson.html", form=form)
+    return render_template("page_tableau_boisson.html", form=form, produits=produit_boisson)
+
+
+@app.route("/boisson/effacer", methods=["POST"])
+def effacer_boisson():
+    if request.method == "POST":
+        id_produit_a_effacer = request.form.get("id")
+        produit_a_effacer = db.get_or_404(Produits, id_produit_a_effacer)
+        db.session.delete(produit_a_effacer)
+        db.session.commit()
+        return redirect(url_for("boisson"))
 
 
 @app.route("/cosmetique", methods=["POST", "GET"])
 def cosmetique():
     form = FormComestique()
+    produit_cosmetique = db.session.execute(db.select(Produits).where(Produits.categorie_id == 3)).scalars().all()
     if request.method == "POST":
         nom = form.nom.data
         quantite = form.quantite.data
-        date_fabrication = form.date_fabrication
+        date_fabrication = form.date_fabrication.data
         date_expiration = form.date_expiration.data
         prix = form.prix.data
         type_produit = form.type.data
@@ -160,12 +188,23 @@ def cosmetique():
         db.session.add(nouveau_produit_cosmetique)
         db.session.commit()
         return redirect(url_for("cosmetique"))
-    return render_template("page_tableau_cosmetique.html", form=form)
+    return render_template("page_tableau_cosmetique.html", form=form, produits=produit_cosmetique)
+
+
+@app.route("/cosmetique/effacer", methods=["POST"])
+def effacer_cosmetique():
+    if request.method == "POST":
+        id_produit_a_effacer = request.form.get("id")
+        produit_a_effacer = db.get_or_404(Produits, id_produit_a_effacer)
+        db.session.delete(produit_a_effacer)
+        db.session.commit()
+        return redirect(url_for("cosmetique"))
 
 
 @app.route("/eletromenage", methods=["POST", "GET"])
 def electromenage():
     form = FormEletromenager()
+    produit_electromenager = db.session.execute(db.select(Produits).where(Produits.categorie_id == 4)).scalars().all()
     if request.method == "POST":
         if request.method == "POST":
             nom = form.nom.data
@@ -185,7 +224,18 @@ def electromenage():
             db.session.commit()
 
         return redirect(url_for("electromenage"))
-    return render_template("page_tableau_eletromenage.html", form=form)
+    return render_template("page_tableau_eletromenage.html",
+                           form=form, produit=produit_electromenager)
+
+
+@app.route("/electromenager/effacer", methods=["POST"])
+def effacer_electromenager():
+    if request.method == "POST":
+        id_produit_a_effacer = request.form.get("id")
+        produit_a_effacer = db.get_or_404(Produits, id_produit_a_effacer)
+        db.session.delete(produit_a_effacer)
+        db.session.commit()
+        return redirect(url_for("electromenager"))
 
 
 @app.route("/utilisateur")

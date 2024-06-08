@@ -108,8 +108,8 @@
                             {% block body_tableau %}{% endblock body_tableau %}
                         </tbody>
                     </table>
-                </div>
 
+                </div>
 
                 <!--Modal ajouter-->
                 <div class="w-[75%] h-[75%] top-[5%] bg-gray-500 bg-opacity-50 fixed hidden justify-center items-center transition-opacity duration-100" id="ajouter_modal">
@@ -117,16 +117,33 @@
                         <div class="flex justify-center p-3">
                             {% block contenu_modal %}{% endblock %}
                         </div>
-                        
                     </div>
                 </div>
                 <!--Modal menu-->
                 {% block menu_modal %}
                 <div class="w-20 p-1 fixed bg-white hidden flex-col shadow-md rounded-md justify-start items-center" id="menu_modal">
-                    <button class="m-2 text-sm text-gray-600 hover:text-gray-800" onclick="closeMenuModal(this)">Modifier</button>
-                    <button class="m-2 text-sm text-gray-600 hover:text-gray-800" onclick="closeMenuModal(this)">Effacer</button>
-                    
+                    <button class="m-2 text-sm text-gray-600 hover:text-gray-800" onclick="openModifierModal(this)">Modifier</button>
+                    <button class="m-2 text-sm text-gray-600 hover:text-gray-800" onclick="openEffacerModal(this)">Effacer</button>
                 </div>
+                {% endblock %}
+
+                {% block effacer_modal %}
+                    <div class="fixed top-1 left-1/2 bg-gray-500 rounded-xl w-30 p-3 hidden" id="effacer_modal">
+                        <form action="{% block fonction_effacer %}{% endblock %}" method="post" class="flex-col">
+                            <div>
+                                <p class="text-xl text-gray-50 text-center">Etes-vous sur de vouloir effacer cette article?</p>
+                            </div>
+                            <div class="flex flex-row justify-center">
+                                <button class="text-gray-50 text-sm bg-red-800 rounded-lg uppercase m-2 p-2 hover:bg-red-600 ">
+                                    Oui
+                                </button>
+                                <button class="text-gray-50 text-sm border border-gray-50 rounded-lg uppercase m-2 p-2 hover:bg-gray-50 hover:text-gray-700" type="button" onclick="closeEffacerModal()">
+                                    Non
+                                </button>
+                                <input type="text" id="id" name="id" class="hidden">
+                            </div>
+                        </form>
+                    </div>
                 {% endblock %}
             </section>
             <!--Donnees utilisateur-->

@@ -16,24 +16,18 @@ block titre %}
     <th scope="col" class="py-3 px-3">Nutriment</th>
     <th scope="col" class="py-3 px-3">Action</th>
 </tr>
-{% endblock head_tableau %} {% block body_tableau %} {% for i in range(0, 20):%}
-{% if i % 2 == 0 %}
-<tr class="border-b border-neutral-200 odd:bg-blue-50">
-    {% else %}
-</tr>
-
-<tr class="border-b border-neutral-200 odd:bg-blue-50">
-    {% endif %}
-    <td class="whitespace-nowrap py-3 px-3 font-semibold">{{i}}</td>
-    <td class="whitespace-nowrap py-3 px-3">Bueno</td>
-    <td class="whitespace-nowrap py-3 px-3">2</td>
-    <td class="whitespace-nowrap py-3 px-3">50</td>
-    <td class="whitespace-nowrap py-3 px-3">2024</td>
-    <td class="whitespace-nowrap py-3 px-3">2025</td>
-    <td class="whitespace-nowrap py-3 px-3">Chocolat</td>
-    <td class="whitespace-nowrap py-3 px-3">30 kcal</td>
+{% endblock head_tableau %} {% block body_tableau %} {% for produit in produits:%}
+    <tr class="border-b border-neutral-200 odd:bg-blue-50">
+    <td class="whitespace-nowrap py-3 px-3 font-semibold">{{produit.id}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.nom}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.prix}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.quantite}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.date_fabrication}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.date_expiration}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.description}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.nutriment}}</td>
     <td class="whitespace-nowrap py-3 px-3">
-        <button onclick="showMenuModal(this)">
+        <button onclick="showMenuModal(this)" id="btn">
             <svg
                 class="w-6 h-6 text-gray-700"
                 aria-hidden="true"
@@ -51,8 +45,22 @@ block titre %}
         </button>
     </td>
 </tr>
-{% endfor %} {% endblock body_tableau %} {% block menu_modal %} {{ super() }} {%
-endblock %} {% block contenu_modal %}
+{% endfor %} {% endblock body_tableau %}
+
+{% block menu_modal %}
+{{super()}}
+{%endblock %}
+
+{% block fonction_effacer %}
+    {{ url_for('effacer_alimentaire') }}
+{% endblock %}
+
+{% block effacer_modal %}
+{{super()}}
+{% endblock %}
+
+
+{% block contenu_modal %}
 <form action="{{url_for('alimentaire') }}" method="post">
     {{ form.csrf_token }}
     <div class="flex flex-col ga-3">

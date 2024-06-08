@@ -103,16 +103,39 @@ function closeModalAjouter(){
 function showMenuModal(button){
     let menu_modal = document.getElementById("menu_modal");
     let buttonRect = button.getBoundingClientRect();
+    var row = button.parentNode.parentNode;
+    var inputs = document.getElementById('id');
 
     menu_modal.style.top = buttonRect.top + buttonRect.height - 10 + 'px';
     menu_modal.style.left = buttonRect.left - 80 + 'px';
     menu_modal.classList.remove("hidden");
     menu_modal.classList.add("block");
+    inputs.value = row.cells[0].textContent;
+    
+
 }
 
-function closeMenuModal(button){
+function openEffacerModal(button){
     let menu_modal = document.getElementById("menu_modal");
+    let effacer_model = document.getElementById("effacer_modal");
 
+    effacer_model.classList.remove("hidden");
+    effacer_model.classList.add("flex");
     menu_modal.classList.remove("flex");
     menu_modal.classList.add("hidden");
+    
+}
+function displayRowData(btn) {
+    var row = btn.parentNode.parentNode;
+    var inputs = document.getElementById('id');
+    inputs.value = row.cells[0].textContent;
+
+}
+
+function closeEffacerModal() {
+    let effacer_model = document.getElementById("effacer_modal");
+
+    effacer_model.classList.remove("flex");
+    effacer_model.classList.add("hidden");
+    
 }
