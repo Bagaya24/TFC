@@ -105,12 +105,63 @@ function showMenuModal(button){
     let buttonRect = button.getBoundingClientRect();
     var row = button.parentNode.parentNode;
     var inputs = document.getElementById('id');
-
     menu_modal.style.top = buttonRect.top + buttonRect.height - 10 + 'px';
     menu_modal.style.left = buttonRect.left - 80 + 'px';
     menu_modal.classList.remove("hidden");
     menu_modal.classList.add("block");
     inputs.value = row.cells[0].textContent;
+    
+    if (button.name == "alimentaire") {
+        var nom = document.getElementById("nom_aliment");
+        var prix = document.getElementById("prix_aliment");
+        var quantite = document.getElementById("quantite_aliment");
+        var nutriment = document.getElementById("nutriment_aliment");
+        var description = document.getElementById("description_aliment");
+        nom.value = row.cells[1].textContent;    
+        prix.value = row.cells[2].textContent;
+        quantite.value = row.cells[3].textContent;
+        description.value = row.cells[6].textContent;
+        nutriment.value = row.cells[7].textContent;
+    }
+    else if (button.name == "boisson") {
+        var nom = document.getElementById("nom_boisson");
+        var prix = document.getElementById("prix_boisson");
+        var quantite = document.getElementById("quantite_boisson");
+        var nutriment = document.getElementById("nutriment_boisson");
+        var description = document.getElementById("description_boisson");
+        nom.value = row.cells[1].textContent;    
+        prix.value = row.cells[2].textContent;
+        quantite.value = row.cells[3].textContent;
+        description.value = row.cells[6].textContent;
+        nutriment.value = row.cells[7].textContent;
+    }
+
+    else if (button.name == "cosmetique") {
+        var nom = document.getElementById("nom_cosmetique"); 
+        var prix = document.getElementById("prix_cosmetique");
+        var quantite = document.getElementById("quantite_cosmetique");
+        var type = document.getElementById("type_cosmetique");
+        var description = document.getElementById("description_cosmetique");
+        nom.value = row.cells[1].textContent;    
+        prix.value = row.cells[2].textContent;
+        quantite.value = row.cells[3].textContent;
+        type.value = row.cells[6].textContent;
+        description.value = row.cells[7].textContent;
+
+    }
+    else if (button.name == "electromenager") {
+        var nom = document.getElementById("nom_electromenager"); 
+        var prix = document.getElementById("prix_electromenager");
+        var quantite = document.getElementById("quantite_electromenager");
+        var type = document.getElementById("type_electromenager");
+        var description = document.getElementById("description_electromenager");
+        nom.value = row.cells[1].textContent;    
+        prix.value = row.cells[2].textContent;
+        quantite.value = row.cells[3].textContent;
+        type.value = row.cells[4].textContent;
+        description.value = row.cells[5].textContent;
+        
+    }
     
 
 }
@@ -138,4 +189,19 @@ function closeEffacerModal() {
     effacer_model.classList.remove("flex");
     effacer_model.classList.add("hidden");
     
+}
+
+function openModifierModal() {
+    let modifier_modal = document.getElementById("modifier_modal");
+    let menu_modal = document.getElementById("menu_modal");
+    modifier_modal.classList.remove("hidden");
+    modifier_modal.classList.add("flex");
+    menu_modal.classList.remove("flex");
+    menu_modal.classList.add("hidden");
+}
+
+function closeModifierModal(){
+    let modifier_modal = document.getElementById("modifier_modal");
+    modifier_modal.classList.remove("flex");
+    modifier_modal.classList.add("hidden");
 }

@@ -1,6 +1,6 @@
 from flask import Flask, request, render_template, redirect, Response, url_for, jsonify
 import ollama
-from form import FormAliment, FormBoisson, FormComestique, FormEletromenager
+from form import FormAliment, FormBoisson, FormComestique, FormEletromenager, FormModifierAliment, FormModifierBoisson, FormModifierComestique, FormModifierEletromenager
 from datetime import datetime
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import Integer, String, ForeignKey, Float, DATE, Text
@@ -88,6 +88,7 @@ def api_produit():
 @app.route("/alimentaire", methods=["POST", "GET"])
 def alimentaire():
     form = FormAliment()
+    form_modifier = FormModifierAliment()
     produit_alimentaire = db.session.execute(db.select(Produits).where(Produits.categorie_id == 1)).scalars().all()
     if request.method == "POST":
         nom = form.nom.data
@@ -110,8 +111,14 @@ def alimentaire():
         db.session.add(nouveau_produit_alimentaire)
         db.session.commit()
         return redirect(url_for("alimentaire"))
-    return render_template("page_tableau_alimentaire.html", form=form, produits=produit_alimentaire)
+    return render_template("page_tableau_alimentaire.html", form=form, form_modifier=form_modifier, produits=produit_alimentaire)
 
+
+@app.route("/alimentaire/modifier", methods=["POST"])
+def modifer_aliment():
+    if request.method == "POST":
+        
+        return redirect(url_for("alimentaire"))
 
 @app.route("/alimentaire/effacer", methods=["POST"])
 def effacer_aliment():
@@ -126,6 +133,7 @@ def effacer_aliment():
 @app.route("/boisson", methods=["POST", "GET"])
 def boisson():
     form = FormBoisson()
+    form_modifier = FormModifierBoisson()
     produit_boisson = db.session.execute(db.select(Produits).where(Produits.categorie_id == 2)).scalars().all()
     for produit in produit_boisson:
         print(produit)
@@ -150,7 +158,7 @@ def boisson():
         db.session.add(nouveau_produit_boisson)
         db.session.commit()
         return redirect(url_for("boisson"))
-    return render_template("page_tableau_boisson.html", form=form, produits=produit_boisson)
+    return render_template("page_tableau_boisson.html", form=form, form_modifier=form_modifier, produits=produit_boisson)
 
 
 @app.route("/boisson/effacer", methods=["POST"])
@@ -166,6 +174,7 @@ def effacer_boisson():
 @app.route("/cosmetique", methods=["POST", "GET"])
 def cosmetique():
     form = FormComestique()
+    form_modifier = FormModifierComestique()
     produit_cosmetique = db.session.execute(db.select(Produits).where(Produits.categorie_id == 3)).scalars().all()
     if request.method == "POST":
         nom = form.nom.data
@@ -188,7 +197,7 @@ def cosmetique():
         db.session.add(nouveau_produit_cosmetique)
         db.session.commit()
         return redirect(url_for("cosmetique"))
-    return render_template("page_tableau_cosmetique.html", form=form, produits=produit_cosmetique)
+    return render_template("page_tableau_cosmetique.html", form=form, form_modifier=form_modifier, produits=produit_cosmetique)
 
 
 @app.route("/cosmetique/effacer", methods=["POST"])
@@ -204,6 +213,7 @@ def effacer_cosmetique():
 @app.route("/eletromenage", methods=["POST", "GET"])
 def electromenage():
     form = FormEletromenager()
+    form_modifier = FormModifierEletromenager()
     produit_electromenager = db.session.execute(db.select(Produits).where(Produits.categorie_id == 4)).scalars().all()
     if request.method == "POST":
         if request.method == "POST":
@@ -225,7 +235,7 @@ def electromenage():
 
         return redirect(url_for("electromenage"))
     return render_template("page_tableau_eletromenage.html",
-                           form=form, produit=produit_electromenager)
+                           form=form, form_modifier=form_modifier, produits=produit_electromenager)
 
 
 @app.route("/electromenager/effacer", methods=["POST"])

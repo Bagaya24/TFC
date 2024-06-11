@@ -20,12 +20,12 @@ endblock %} {% block t_boi %}text-gray-700 border-r-blue-400{% endblock t_boi %}
     <td class="whitespace-nowrap py-3 px-3">{{produit.nom}}</td>
     <td class="whitespace-nowrap py-3 px-3">{{produit.prix}}</td>
     <td class="whitespace-nowrap py-3 px-3">{{produit.quantite}}</td>
-    <td class="whitespace-nowrap py-3 px-3">{{produit.fabrication}}</td>
-    <td class="whitespace-nowrap py-3 px-3">{{produit.expiration}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.date_fabrication}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.date_expiration}}</td>
     <td class="whitespace-nowrap py-3 px-3">{{produit.description}}</td>
-    <td class="whitespace-nowrap py-3 px-3">{{produit.nutriment}}</td>
+    <td class="whitespace-nowrap py-3 px-3">{{produit.nutriments}}</td>
     <td class="whitespace-nowrap py-3 px-3">
-        <button onclick="showMenuModal(this)">
+        <button onclick="showMenuModal(this)" class="transition ease-in-out delay-150  hover:-translate-y-1 duration-300" name="boisson">
             <svg
                 class="w-6 h-6 text-gray-700"
                 aria-hidden="true"
@@ -120,3 +120,66 @@ endblock %} {% block t_boi %}text-gray-700 border-r-blue-400{% endblock t_boi %}
     </div>
 </form>
 {% endblock %}
+
+{% block contenu_a_modifier_modal %}
+<form action="{{url_for('boisson') }}" method="post">
+    {{ form.csrf_token }}
+    <div class="flex flex-col gap-3">
+        <div>
+            {{ form_modifier.nom.label(class="text-gray-500 block") }} {{
+            form_modifier.nom(class="border border-blue-300 text-gray-900 text-sm
+            rounded-lg
+            focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", id="nom_boisson")}}
+        </div>
+        <div class="flex flex-row gap-2">
+            <div>
+                {{ form_modifier.prix.label(class="text-gray-500 block")}} {{
+                form_modifier.prix(class="border border-blue-300 text-gray-900 text-sm
+                rounded-lg
+                focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5", id="prix_boisson")}}
+            </div>
+            <div>
+                {{ form_modifier.quantite.label(class="text-gray-500 block")}} {{
+                form_modifier.quantite(class="border border-blue-300 text-gray-900
+                text-sm
+                rounded-lg focus:ring-blue-500 focus:border-blue-500 block
+                w-full
+                p-2.5", id="quantite_boisson")}}
+            </div>
+        </div>
+        <div class="flex flex-row gap-2">
+            <div>
+                {{ form_modifier.date_fabrication.label(class="text-gray-500 block")}} {{
+                form_modifier.date_fabrication(class="")}}
+            </div>
+            <div>
+                {{ form_modifier.date_expiration.label(class="text-gray-500 block")}} {{
+                form_modifier.date_expiration(class="")}}
+            </div>
+        </div>
+        <div>
+            {{ form_modifier.description.label(class="text-gray-500 block")}} {{
+            form_modifier.description(class="border border-blue-300 text-gray-900 text-sm
+            rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
+            p-2.5", id="description_boisson")}}
+        </div>
+        <div>
+            {{ form_modifier.nutriment.label(class="text-gray-500 block")}} {{
+            form_modifier.nutriment(class="border border-blue-300 text-gray-900 text-sm
+            rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full
+            p-2.5", id="nutriment_boisson")}}
+        </div>
+        <div class="flex flex-row justify-center p-2">
+            {{ form_modifier.btn_modifier(class="bg-blue-900 text-white text-sm
+            font-semibold
+            rounded-2xl p-3 mx-4 uppercase hover:bg-blue-700 hover:shadow-lg")}}
+            {{
+            form_modifier.btn_annuler(class="bg-white text-gray-700 border
+            border-blue-300
+            text-sm font-semibold rounded-2xl p-3 mx-4 uppercase
+            hover:bg-blue-100
+            hover:shadow-lg", onclick="closeModifierModal()")}}
+        </div>
+    </div>
+</form>
+{% endblock%}

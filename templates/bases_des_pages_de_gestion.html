@@ -92,7 +92,7 @@
                         {% endblock %}
                     </div>
                     <div class="basis-3/12 flex justify-center items-center">
-                        <button class="p-3 bg-blue-900 hover:bg-blue-950 border rounded-lg" onclick="showAjouterModal()">
+                        <button class="transition p-3 rounded-lg ease-in-out delay-150 bg-blue-800 hover:-translate-y-1 hover:bg-blue-900 duration-300" onclick="showAjouterModal()">
                             <svg class="w-6 h-6 text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 12h14m-7 7V5"/>
                             </svg>
@@ -122,22 +122,22 @@
                 <!--Modal menu-->
                 {% block menu_modal %}
                 <div class="w-20 p-1 fixed bg-white hidden flex-col shadow-md rounded-md justify-start items-center" id="menu_modal">
-                    <button class="m-2 text-sm text-gray-600 hover:text-gray-800" onclick="openModifierModal(this)">Modifier</button>
+                    <button class="m-2 text-sm text-gray-600 hover:text-gray-800" onclick="openModifierModal()">Modifier</button>
                     <button class="m-2 text-sm text-gray-600 hover:text-gray-800" onclick="openEffacerModal(this)">Effacer</button>
                 </div>
                 {% endblock %}
-
+                <!--Modal effacer-->
                 {% block effacer_modal %}
                     <div class="fixed top-1 left-1/2 bg-gray-500 rounded-xl w-30 p-3 hidden" id="effacer_modal">
                         <form action="{% block fonction_effacer %}{% endblock %}" method="post" class="flex-col">
-                            <div>
-                                <p class="text-xl text-gray-50 text-center">Etes-vous sur de vouloir effacer cette article?</p>
+                            <div class="p-2">
+                                <p class="text-xl text-gray-50 font-semibold text-center">Etes-vous sur de vouloir effacer cette article?</p>
                             </div>
                             <div class="flex flex-row justify-center">
-                                <button class="text-gray-50 text-sm bg-red-800 rounded-lg uppercase m-2 p-2 hover:bg-red-600 ">
+                                <button class="text-red-500 text-sm font-semibold rounded-xl uppercase m-2 p-2 hover:bg-red-100 transition ease-linear duration-200">
                                     Oui
                                 </button>
-                                <button class="text-gray-50 text-sm border border-gray-50 rounded-lg uppercase m-2 p-2 hover:bg-gray-50 hover:text-gray-700" type="button" onclick="closeEffacerModal()">
+                                <button class="text-gray-50 text-sm font-semibold rounded-xl uppercase m-2 p-2 hover:bg-gray-50 hover:text-gray-700 transition ease-linear duration-200" type="button" onclick="closeEffacerModal()">
                                     Non
                                 </button>
                                 <input type="text" id="id" name="id" class="hidden">
@@ -145,14 +145,22 @@
                         </form>
                     </div>
                 {% endblock %}
+                <!--Modal modifier-->
+                {% block modifier_modal %}
+                <div class="w-[75%] h-[75%] top-[5%] bg-gray-500 bg-opacity-50 fixed hidden justify-center items-center transition-opacity duration-100" id="modifier_modal">
+                    <div class="bg-white w-[80%] p-15 shadow-lg flex flex-col gap-2">
+                        <div class="flex justify-center p-3">
+                            {% block contenu_a_modifier_modal %}{% endblock %}
+                        </div>
+                    </div>
+                </div>
+                {% endblock %}
             </section>
             <!--Donnees utilisateur-->
             <section class="w-11/12 h-screen {% block hidden_s_uti %}hidden{% endblock %} flex flex-row">
                 {% block utilisateur %}
                 {% endblock %}
             </section>
-            
-
         </div>
     </main>
 </body>
