@@ -15,6 +15,7 @@ class FormAliment(FlaskForm):
     btn_ajouter = SubmitField(label="ajouter")
     btn_annuler = SubmitField(label="annuler")
 
+
 class FormModifierAliment(FlaskForm):
     nom = StringField(label="Nom", validators=[DataRequired()])
     prix = DecimalField(label="Prix", validators=[DataRequired()])
@@ -26,6 +27,7 @@ class FormModifierAliment(FlaskForm):
     btn_modifier = SubmitField(label="modifier")
     btn_annuler = SubmitField(label="annuler")
 
+
 class FormBoisson(FlaskForm):
     nom = StringField(label="Nom", validators=[DataRequired()])
     prix = DecimalField(label="Prix", validators=[DataRequired()])
@@ -36,7 +38,8 @@ class FormBoisson(FlaskForm):
     nutriment = TextAreaField(label="Nutriment")
     btn_ajouter = SubmitField(label="ajouter")
     btn_annuler = SubmitField(label="annuler")
-    
+
+
 class FormModifierBoisson(FlaskForm):
     nom = StringField(label="Nom", validators=[DataRequired()])
     prix = DecimalField(label="Prix", validators=[DataRequired()])
@@ -47,7 +50,8 @@ class FormModifierBoisson(FlaskForm):
     nutriment = TextAreaField(label="Nutriment")
     btn_modifier = SubmitField(label="modifier")
     btn_annuler = SubmitField(label="annuler")
-    
+
+
 class FormEletromenager(FlaskForm):
     nom = StringField(label="Nom", validators=[DataRequired()])
     prix = DecimalField(label="Prix", validators=[DataRequired()])
@@ -68,7 +72,7 @@ class FormModifierEletromenager(FlaskForm):
     btn_annuler = SubmitField(label="annuler")
     
     
-class FormComestique(FlaskForm):
+class FormCosmetique(FlaskForm):
     nom = StringField(label="Nom", validators=[DataRequired()])
     prix = DecimalField(label="Prix", validators=[DataRequired()])
     quantite = IntegerField(label="Quantite", validators=[DataRequired()])
@@ -78,8 +82,9 @@ class FormComestique(FlaskForm):
     description = TextAreaField(label="Description", validators=[DataRequired()])
     btn_ajouter = SubmitField(label="ajouter")
     btn_annuler = SubmitField(label="annuler")
-    
-class FormModifierComestique(FlaskForm):
+
+
+class FormModifierCosmetique(FlaskForm):
     nom = StringField(label="Nom", validators=[DataRequired()])
     prix = DecimalField(label="Prix", validators=[DataRequired()])
     quantite = IntegerField(label="Quantite", validators=[DataRequired()])

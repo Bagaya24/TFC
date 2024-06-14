@@ -109,7 +109,7 @@ endblock %} {% block t_ele %}text-gray-700 border-r-blue-400{% endblock t_ele %}
 {% endblock %}
 
 {% block contenu_a_modifier_modal %}
-<form action="{{url_for('electromenage')}}" method="post">
+<form action="{{url_for('modifier_electromenager')}}" method="post">
     {{ form.csrf_token }}
     <div class="flex flex-col gap-3">
         <div>

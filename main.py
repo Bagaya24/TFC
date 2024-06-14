@@ -1,10 +1,13 @@
-from flask import Flask, request, render_template, redirect, Response, url_for, jsonify
-import ollama
-from form import FormAliment, FormBoisson, FormComestique, FormEletromenager, FormModifierAliment, FormModifierBoisson, FormModifierComestique, FormModifierEletromenager
 from datetime import datetime
+
+import ollama
+from flask import Flask, request, render_template, redirect, Response, url_for, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Integer, String, ForeignKey, Float, DATE, Text
+from sqlalchemy import Integer, String, ForeignKey, DATE, Text
 from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
+
+from form import FormAliment, FormBoisson, FormEletromenager, FormModifierAliment, FormModifierBoisson, \
+    FormModifierEletromenager, FormModifierCosmetique, FormCosmetique
 
 
 class Base(DeclarativeBase):
@@ -13,10 +16,8 @@ class Base(DeclarativeBase):
 
 app = Flask(__name__)
 
-
 app.config["SQLALCHEMY_DATABASE_URI"] = "mysql+pymysql://root:fazili@localhost/db_stock_supermarche"
 app.config["SECRET_KEY"] = "cnwdnenoe.'20323oii"
-
 
 db = SQLAlchemy(model_class=Base)
 db.init_app(app)
@@ -111,14 +112,33 @@ def alimentaire():
         db.session.add(nouveau_produit_alimentaire)
         db.session.commit()
         return redirect(url_for("alimentaire"))
-    return render_template("page_tableau_alimentaire.html", form=form, form_modifier=form_modifier, produits=produit_alimentaire)
+    return render_template("page_tableau_alimentaire.html", form=form, form_modifier=form_modifier,
+                           produits=produit_alimentaire)
 
 
 @app.route("/alimentaire/modifier", methods=["POST"])
-def modifer_aliment():
+def modifier_aliment():
+    form_modifier = FormModifierAliment()
     if request.method == "POST":
-        
+        nom = form_modifier.nom.data
+        prix = form_modifier.prix.data
+        quantite = form_modifier.quantite.data
+        date_fabrication = form_modifier.date_fabrication.data
+        date_expiration = form_modifier.date_expiration.data
+        nutriment = form_modifier.nutriment.data
+        description = form_modifier.description.data
+
+        produit_alimentaire_a_modifier = db.session.execute(db.select(Produits).where(Produits.nom == nom)).scalar()
+        produit_alimentaire_a_modifier.nom = nom
+        produit_alimentaire_a_modifier.prix = prix
+        produit_alimentaire_a_modifier.quantite = quantite
+        produit_alimentaire_a_modifier.date_fabrication = date_fabrication
+        produit_alimentaire_a_modifier.date_expiration = date_expiration
+        produit_alimentaire_a_modifier.nutriments = nutriment
+        produit_alimentaire_a_modifier.description = description
+        db.session.commit()
         return redirect(url_for("alimentaire"))
+
 
 @app.route("/alimentaire/effacer", methods=["POST"])
 def effacer_aliment():
@@ -158,7 +178,32 @@ def boisson():
         db.session.add(nouveau_produit_boisson)
         db.session.commit()
         return redirect(url_for("boisson"))
-    return render_template("page_tableau_boisson.html", form=form, form_modifier=form_modifier, produits=produit_boisson)
+    return render_template("page_tableau_boisson.html", form=form, form_modifier=form_modifier,
+                           produits=produit_boisson)
+
+
+@app.route("/boisson/modifier", methods=["POST"])
+def modifier_boisson():
+    form_modifier = FormModifierBoisson()
+    if request.method == "POST":
+        nom = form_modifier.nom.data
+        prix = form_modifier.prix.data
+        quantite = form_modifier.quantite.data
+        date_fabrication = form_modifier.date_fabrication.data
+        date_expiration = form_modifier.date_expiration.data
+        nutriment = form_modifier.nutriment.data
+        description = form_modifier.description.data
+
+        produit_boisson_a_modifier = db.session.execute(db.select(Produits).where(Produits.nom == nom)).scalar()
+        produit_boisson_a_modifier.nom = nom
+        produit_boisson_a_modifier.prix = prix
+        produit_boisson_a_modifier.quantite = quantite
+        produit_boisson_a_modifier.date_fabrication = date_fabrication
+        produit_boisson_a_modifier.date_expiration = date_expiration
+        produit_boisson_a_modifier.nutriments = nutriment
+        produit_boisson_a_modifier.description = description
+        db.session.commit()
+        return redirect(url_for("boisson"))
 
 
 @app.route("/boisson/effacer", methods=["POST"])
@@ -173,8 +218,8 @@ def effacer_boisson():
 
 @app.route("/cosmetique", methods=["POST", "GET"])
 def cosmetique():
-    form = FormComestique()
-    form_modifier = FormModifierComestique()
+    form = FormCosmetique()
+    form_modifier = FormModifierCosmetique()
     produit_cosmetique = db.session.execute(db.select(Produits).where(Produits.categorie_id == 3)).scalars().all()
     if request.method == "POST":
         nom = form.nom.data
@@ -197,7 +242,32 @@ def cosmetique():
         db.session.add(nouveau_produit_cosmetique)
         db.session.commit()
         return redirect(url_for("cosmetique"))
-    return render_template("page_tableau_cosmetique.html", form=form, form_modifier=form_modifier, produits=produit_cosmetique)
+    return render_template("page_tableau_cosmetique.html", form=form, form_modifier=form_modifier,
+                           produits=produit_cosmetique)
+
+
+@app.route("/cosmetique/modifier", methods=["POST"])
+def modifier_cosmetique():
+    form_modifier = FormModifierCosmetique()
+    if request.method == "POST":
+        nom = form_modifier.nom.data
+        prix = form_modifier.prix.data
+        quantite = form_modifier.quantite.data
+        date_fabrication = form_modifier.date_fabrication.data
+        date_expiration = form_modifier.date_expiration.data
+        type_cosmetique = form_modifier.type.data
+        description = form_modifier.description.data
+
+        produit_cosmetique_a_modifier = db.session.execute(db.select(Produits).where(Produits.nom == nom)).scalar()
+        produit_cosmetique_a_modifier.nom = nom
+        produit_cosmetique_a_modifier.prix = prix
+        produit_cosmetique_a_modifier.quantite = quantite
+        produit_cosmetique_a_modifier.date_fabrication = date_fabrication
+        produit_cosmetique_a_modifier.date_expiration = date_expiration
+        produit_cosmetique_a_modifier.description = type_cosmetique
+        produit_cosmetique_a_modifier.details_specifiques = description
+        db.session.commit()
+        return redirect(url_for("cosmetique"))
 
 
 @app.route("/cosmetique/effacer", methods=["POST"])
@@ -238,6 +308,26 @@ def electromenage():
                            form=form, form_modifier=form_modifier, produits=produit_electromenager)
 
 
+@app.route("/electromenager/modifier", methods=["POST"])
+def modifier_electromenager():
+    form_modifier = FormEletromenager()
+    if request.method == "POST":
+        nom = form_modifier.nom.data
+        prix = form_modifier.prix.data
+        quantite = form_modifier.quantite.data
+        type_cosmetique = form_modifier.type.data
+        description = form_modifier.description.data
+
+        produit_cosmetique_a_modifier = db.session.execute(db.select(Produits).where(Produits.nom == nom)).scalar()
+        produit_cosmetique_a_modifier.nom = nom
+        produit_cosmetique_a_modifier.prix = prix
+        produit_cosmetique_a_modifier.quantite = quantite
+        produit_cosmetique_a_modifier.description = type_cosmetique
+        produit_cosmetique_a_modifier.details_specifiques = description
+        db.session.commit()
+        return redirect(url_for("electromenage"))
+
+
 @app.route("/electromenager/effacer", methods=["POST"])
 def effacer_electromenager():
     if request.method == "POST":
@@ -271,4 +361,3 @@ def assistant(conversation: list[dict]) -> str:
 
 if __name__ == "__main__":
     app.run(debug=True)
-

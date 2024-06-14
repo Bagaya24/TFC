@@ -122,7 +122,7 @@ endblock %} {% block t_boi %}text-gray-700 border-r-blue-400{% endblock t_boi %}
 {% endblock %}
 
 {% block contenu_a_modifier_modal %}
-<form action="{{url_for('boisson') }}" method="post">
+<form action="{{url_for('modifier_boisson') }}" method="post">
     {{ form.csrf_token }}
     <div class="flex flex-col gap-3">
         <div>
